@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- fontawsome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css"
+      integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- tail -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- faavic -->
+    <link
+      rel="shortcut icon"
+      href="https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
+      type="image/x-icon"
+    />
+    <style>
+      ::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+        background-color: black;
+        border-radius: 0px 100px 100px 0px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+        border: 1px solid gold;
+        border-radius: 0px 100px 100px 0px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: gold;
+        border-radius: 0px 100px 100px 0px;
+      }
+    </style>
+  </head>
+  <body class="bg-black">
+    <header class="flex justify-center items-center">
+      <h1
+        class="text-[45px] font-bold text-[yellow] tracking-widest inline"
+        style="font-family: &quot;Bubblegum Sans&quot;, sans-serif"
+      >
+        P
+      </h1>
+      <img
+        class="w-[29px] me-1"
+        src="https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
+        alt="o"
+      />
+      <h1
+        class="text-[45px] font-bold text-[yellow] tracking-widest inline"
+        style="font-family: &quot;Bubblegum Sans&quot;, sans-serif"
+      >
+        kemon
+      </h1>
+    </header>
+
+    <main
+      class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-1"
+    >
+      <aside
+        class="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 border-1 border-yellow-300 sm:mx-2 max-h-[80vh] rounded-[10px] relative"
+        style="font-family: 'Sour Gummy', sans-serif"
+      >
+        <div
+          id="cards"
+          class="flex flex-col rounded-[10px] divide-y-1 divide-yellow-300 tracking-wider overflow-auto max-h-[76vh] overflow-x-hidden text-sm sm:text-lg pb-[40px]"
+        ></div>
+        <div
+          class="text-lg bg-black h-[40px] flex justify-between items-center bg-yellow-300 absolute bottom-0 left-0 right-0"
+        >
+          <button
+            onclick="previousBtnClick()"
+            class="text-black font-semibold w-[50%] ms-[-1px] hover:text-sm hover:bg-[gold] h-full flex justify-center items-center"
+          >
+            <i class="fa-solid fa-angles-left"></i><div class="hidden sm:inline">PREVIOUS</div>
+          </button>
+          <button
+            onclick="nextBtnClick()"
+            class="text-black font-semibold w-[50%] ms-[-1px]  hover:text-sm hover:bg-[gold] h-full flex justify-center items-center"
+          >
+            <div class="hidden sm:block">NEXT</div><i class="fa-solid fa-angles-right"></i>
+          </button>
+        </div>
+      </aside>
+
+      <div class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 mx-2">
+        <div class="flex h-20 justify-center items-center sm:gap-4">
+          <input
+            class="w-[300px] h-[50px] bg-yellow-300 rounded-[25px_0_0_25px] sm:rounded-full px-5 placeholder-black font-semibold text-yellow-300 min-w-0 focus:outline-none tracking-wide focus:border-1 focus:border-yellow-300 focus:bg-transparent focus:placeholder-yellow-300"
+            type="search"
+            id="search"
+            placeholder="Search Pokemon"
+            style="font-family: &quot;Sour Gummy&quot;, sans-serif"
+          />
+          <button
+            onclick="onSearchBtnClick()"
+            type="button"
+            class="text-yellow-300 font-semibold py-[9px] px-4 rounded-[0_25px_25px_0] sm:rounded-full ms-[-1px] border-2 border-yelllow-300 text-lg hover:bg-yellow-300 hover:text-black hover:border-yelllow-300"
+            style="font-family: &quot;Sour Gummy&quot;, sans-serif"
+          >
+            Search
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-[60vh]" id="pokemon">
+          <article
+            class="bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIyzju-j4SeCeblby7-l0dNuq1DiHNGawq5mIcWK9GyawNZbCCyopoqeU&s=10')] bg-cover min-h-90 min-w-30 max-w-60 grow rounded-sm outline-2 outline-[gold] outline-offset-4 flex flex-col items-center justify-evenly px-2 relative"
+          >
+            <div
+              style="
+                font-family: &quot;Bubblegum Sans&quot;, sans-serif;
+                clip-path: polygon(
+                  2% 50%,
+                  8% 15%,
+                  15% 15%,
+                  15% 0%,
+                  85% 0%,
+                  85% 15%,
+                  92% 15%,
+                  98% 50%,
+                  92% 85%,
+                  100% 85%,
+                  85% 85%,
+                  85% 100%,
+                  15% 100%,
+                  15% 85%,
+                  8% 85%
+                );
+              "
+              class="w-full font-thin flex justify-center items-center h-8 text-xl bg-linear-45 from-[gold] via-[green] via-[gold] via-[gold] to-[gold] text-[gold] border-1 border-[gold] mb-[-16.1px] tracking-wider"
+              id="pokemonName"
+            >
+              NAME
+            </div>
+            <div
+              class="bg-black h-35 w-full rounded-xl overflow-hidden flex items-end justify-center px-1 pt-1 border-1 border-[gold]"
+              id="image"
+            >
+              <img
+                class="h-full w-full object-contain"
+                src="https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
+                alt="pokemon"
+              />
+            </div>
+            <div
+              class="w-full min-h-10 rounded-lg border-1 border-yellow-300 flex justify-evenly items-center text-white text-[12px] bg-linear-55 from-black/0 via-[green] to-black/0 divide-x-1 divide-[gold]"
+            >
+              <div class="w-full text-center" id="height">
+                <i class="fa-solid fa-up-long text-[gold]"></i> Height
+              </div>
+
+              <div class="w-full text-center" id="ability">
+                <i class="fa-brands fa-superpowers text-[gold]"></i> Ability
+              </div>
+            </div>
+            <div
+              style="
+                font-family: &quot;Bubblegum Sans&quot;, sans-serif;
+                clip-path: polygon(
+                  0% 5%,
+                  5% 5%,
+                  5% 0%,
+                  95% 0%,
+                  95% 5%,
+                  100% 5%,
+                  100% 95%,
+                  95% 95%,
+                  95% 100%,
+                  5% 100%,
+                  5% 95%,
+                  0% 95%
+                );
+              "
+              class="w-full min-h-30 rounded-lg text-center text-sm bg-white pb-1"
+            >
+              <h6 class="my-1 text-green-700 text-shadow-[0_1px_1px_black]">
+                ---- STATS ----
+              </h6>
+              <div class="grid grid-cols-14 gap-1 h-20">
+                <div
+                  class="h-full flex flex-col justify-between items-center col-span-2"
+                >
+                  <div class="flex items-center">
+                    <i class="fa-solid fa-heart text-red-600"></i>
+                  </div>
+                  <div class="flex items-center grid-col-3">
+                    <i class="fa-solid fa-hand-fist text-yellow-500"></i>
+                  </div>
+                  <div class="flex items-center grid-col-3">
+                    <i class="fa-solid fa-shield text-green-500"></i>
+                  </div>
+                  <div class="flex items-center grid-col-3">
+                    <i class="fa-solid fa-person-running text-orange-400"></i>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col justify-evenly gap-3 items-center col-span-10"
+                  id="chart"
+                >
+                  <div
+                    class="flex items-center bg-black h-2 w-full rounded-full"
+                  >
+                    <div class="bg-red-600 w-[0%] h-full rounded-full"></div>
+                  </div>
+                  <div
+                    class="flex items-center bg-black h-2 w-full rounded-full"
+                  >
+                    <div class="bg-yellow-500 w-[0%] h-full rounded-full"></div>
+                  </div>
+                  <div
+                    class="flex items-center bg-black h-2 w-full rounded-full"
+                  >
+                    <div class="bg-green-500 w-[0%] h-full rounded-full"></div>
+                  </div>
+                  <div
+                    class="flex items-center bg-black h-2 w-full rounded-full"
+                  >
+                    <div class="bg-red-600 w-[0%] h-full rounded-full"></div>
+                  </div>
+                </div>
+                <div
+                  class="col-span-2 flex flex-col justify-between items-center gap-1 leading-none"
+                  id="percentage"
+                >
+                  <span>0</span>
+                  <span>0</span>
+                  <span>0</span>
+                  <span>0</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script>
+    const resetCard = () => {
+      document.querySelector("#pokemon").innerHTML = `<article
+            class="bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIyzju-j4SeCeblby7-l0dNuq1DiHNGawq5mIcWK9GyawNZbCCyopoqeU&s=10')] bg-cover min-h-90 min-w-30 max-w-60 grow rounded-sm outline-2 outline-[gold] outline-offset-4 flex flex-col items-center justify-evenly px-2 relative"
+          >
+            <div style="font-family: 'Bubblegum Sans', sans-serif; clip-path: polygon(2% 50%,8% 15%,15% 15%,15% 0%,85% 0%,85% 15%, 92% 15%,98% 50%,92% 85%,100% 85%, 85% 85%,85% 100%,15% 100%,15% 85%,8% 85% );" class="w-full  font-thin  flex justify-center items-center h-8 text-xl bg-linear-45 from-[gold] via-[green] via-[gold] via-[gold] to-[gold]  text-[gold] border-1  border-[gold] mb-[-16.1px] tracking-wider">
+                NAME
+            </div>
+            <div  class=" bg-black h-35 w-full rounded-xl overflow-hidden flex items-end justify-center px-1 pt-1 border-1 border-[gold] " id="image">
+              <img class="h-full w-full  object-contain" src="https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png" alt="pokemon">
+            </div>
+            <div class="w-full min-h-10 rounded-lg border-1 border-yellow-300 flex justify-evenly items-center text-white text-[12px] bg-linear-55 from-black/0 via-[green] to-black/0  divide-x-1 divide-[gold] ">
+                <div class="w-full text-center" >
+                    <i class="fa-solid fa-up-long text-[gold] "></i> Height
+                </div>
+                
+                <div class="w-full text-center">
+                    <i class="fa-brands fa-superpowers text-[gold] "></i> Ability
+                </div>
+            </div>
+            <div style="font-family: 'Bubblegum Sans', sans-serif; clip-path: polygon(0% 5%,5% 5%,5% 0%,95% 0%,95% 5%, 100% 5%,100% 95%,95% 95%, 95% 100%,5% 100%,5% 95%,0% 95% );" class="w-full min-h-30 rounded-lg  text-center  text-sm bg-white pb-1">
+                <h6 class="my-1 text-green-700 text-shadow-[0_1px_1px_black]" >
+                    ---- STATS ----
+                </h6>
+                <div class="grid grid-cols-14 gap-1 h-20">
+                    <div class="h-full flex flex-col justify-between items-center col-span-2">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-heart text-red-600"></i> 
+                        </div>
+                        <div class="flex items-center grid-col-3">
+                            <i class="fa-solid fa-hand-fist text-yellow-500"></i>
+                        </div>
+                        <div class="flex items-center grid-col-3">
+                            <i class="fa-solid fa-shield text-green-500"></i> 
+                        </div>
+                        <div class="flex items-center grid-col-3">
+                            <i class="fa-solid fa-person-running text-orange-400"></i>
+                        </div>
+
+                    </div>
+                    <div class="flex flex-col justify-evenly gap-3 items-center col-span-10">
+                        
+                        <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-red-600 w-[0%] h-full rounded-full "></div>
+                        </div>
+                        <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-yellow-500 w-[0%] h-full rounded-full "></div>
+                        </div>
+                        <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-green-500 w-[0%] h-full rounded-full "></div>
+                        </div>
+                        <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-red-600 w-[0%] h-full rounded-full "></div>
+                        </div>
+                    </div>
+                    <div class="col-span-2 flex flex-col justify-between items-center gap-1 leading-none">
+                        <span>0</span>
+                        <span>0</span>
+                        <span>0</span>
+                        <span>0</span>
+                    </div>
+                    
+                </div>
+                    
+                
+            </div>
+          </article>`;
+    };
+    let home="https://pokeapi.co/api/v2/pokemon/"
+    let previousPage = null;
+    let nextPage = null;
+
+    const getData = async (page) => {
+      try {
+        let apiResponse = await fetch(`${page}`);
+        if (!apiResponse.ok) {
+            let cards=document.querySelector("#cards")
+          cards.className =
+            " w-full h-full rounded-[10px] bg-black flex justify-center items-center font-sans font-bold text-[30px] text-[grey]";
+          cards.innerText= "!404 Page Not Found"
+          return;
+        }
+        apiResponse = await apiResponse.json();
+        let results = apiResponse.results;
+        nextPage = apiResponse.next;
+        previousPage = apiResponse.previous;
+        console.log(nextPage);
+        console.log(previousPage);
+
+        let cards = document.querySelector("#cards");
+        cards.innerHTML = "";
+        results.map(
+          (each) =>
+            (cards.innerHTML += `<div class=" py-2 px-0 sm:p-2 rounded-[10px] bg-linear-to-b from-yellow-300/30 via-black to-black mb-2" >
+            <h2 class="text-yellow-300 text-center  ">${each.name}</h2>
+        </div>`),
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData(home);
+
+    const nextBtnClick = async () => {
+      if (nextPage) {
+        getData(nextPage);
+      }
+    };
+
+    const previousBtnClick = () => {
+      if (previousPage) {
+        getData(previousPage);
+      }
+    };
+
+    const onSearchBtnClick = async () => {
+      try {
+        let search = document.querySelector("#search").value;
+        let apiResponse = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${search}`,
+        );
+        if (!apiResponse.ok) {
+          resetCard();
+          alert("Pokemon not Found");
+          return;
+        }
+        apiResponse = await apiResponse.json();
+        document.getElementById("image").innerHTML = `<img
+                class="h-[105%] w-full  object-contain"
+                src=${apiResponse.sprites.other.home.front_shiny}
+                alt="image"
+              />`;
+
+        document.querySelector("#pokemonName").innerText = apiResponse.name;
+        document.querySelector("#height").innerHTML =
+          `<i class="fa-solid fa-up-long text-[gold] "></i> ${apiResponse.height}`;
+        document.querySelector("#ability").innerHTML =
+          `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0].ability.name}`;
+        document.querySelector("#chart").innerHTML =
+          `<div class="flex items-center bg-black h-2 w-full rounded-full" >
+                        <div class="bg-red-600 w-[${apiResponse.stats[0].base_stat}%] h-full rounded-full "></div>
+                        </div>
+            <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-yellow-500 w-[${apiResponse.stats[1].base_stat}%] h-full rounded-full "></div>
+                        </div>
+            <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-green-500 w-[${apiResponse.stats[2].base_stat}%] h-full rounded-full "></div>
+                        </div>
+            <div class="flex items-center bg-black h-2 w-full rounded-full">
+                            <div class="bg-red-600 w-[${apiResponse.stats[5].base_stat}%] h-full rounded-full "></div>
+                        </div>`;
+
+        document.querySelector("#percentage").innerHTML =
+          `<span>${apiResponse.stats[0].base_stat}</span>
+                  <span>${apiResponse.stats[1].base_stat}</span>
+                  <span>${apiResponse.stats[2].base_stat}</span>
+                  <span>${apiResponse.stats[5].base_stat}</span>`;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  </script>
+</html>
