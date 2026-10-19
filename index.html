@@ -295,9 +295,10 @@
         cards.innerHTML = "";
         results.map(
           (each) =>
-            (cards.innerHTML += `<div class=" py-2 px-0 sm:p-2 rounded-[10px] bg-linear-to-b from-yellow-300/30 via-black to-black mb-2" >
-            <h2 class="text-yellow-300 text-center  ">${each.name}</h2>
-        </div>`),
+            (cards.innerHTML += `<button onclick="onNameClick(this)" class=" py-2 px-0 sm:p-2 rounded-[10px] bg-linear-to-b from-yellow-300/30 via-black to-black mb-2 text-yellow-300 text-center cursor-pointer  hover:bg-yellow-300 sm:hover:text-xl hover:text-[15px] 
+            active:bg-[green]" >
+            ${each.name}
+        </button>`),
         );
       } catch (error) {
         console.log(error);
@@ -305,26 +306,8 @@
     };
     getData(home);
 
-    const nextBtnClick = async () => {
-      if (nextPage) {
-        getData(nextPage);
-      }
-    };
-
-    const previousBtnClick = () => {
-      if (previousPage) {
-        getData(previousPage);
-      }
-    };
-
-    const onSearchBtnClick = async () => {
+    const cardDisplay=async(search)=>{
       try {
-        let search = document.querySelector("#search").value;
-
-        if (!search) {
-          return;
-        }
-
         let apiResponse = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${search}`,
         );
@@ -407,8 +390,41 @@
                   <span>${apiResponse.stats[2].base_stat}</span>
                   <span>${apiResponse.stats[5].base_stat}</span>`;
       } catch (error) {
+        
+      }
+    }
+
+    const nextBtnClick = () => {
+      if (nextPage) {
+        getData(nextPage);
+      }
+    };
+
+    const previousBtnClick = () => {
+      if (previousPage) {
+        getData(previousPage);
+      }
+    };
+
+    const onSearchBtnClick = async () => {
+      try {
+        let search = document.querySelector("#search").value;
+
+        if (!search) {
+          return;
+        }
+        cardDisplay(search)
+        
+      } catch (error) {
         console.log(error);
       }
     };
+
+    const onNameClick=(buttonName)=>{
+      let btnName= buttonName.innerText
+      console.log(btnName);
+      cardDisplay(btnName)
+    }
+
   </script>
 </html>
