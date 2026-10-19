@@ -28,7 +28,7 @@
       type="image/x-icon"
     />
     <style>
-      html{
+      html {
         scroll-behavior: smooth;
       }
       ::-webkit-scrollbar {
@@ -45,20 +45,24 @@
         background-color: gold;
         border-radius: 0px 100px 100px 0px;
       }
-      @media (max-width:640px) {
+      @media (max-width: 640px) {
         ::-webkit-scrollbar {
-        width: 5px;
-        background-color: black;
-        border-radius: 0px 100px 100px 0px;
-      }
+          width: 5px;
+          background-color: black;
+          border-radius: 0px 100px 100px 0px;
+        }
       }
     </style>
   </head>
-  <body class="bg-black" style="font-family: 'Sour Gummy', sans-serif">
-    <header class="flex justify-center items-center"  style="font-family: 'Bubblegum Sans', sans-serif">
-      <h1
-        class="text-[45px] font-bold text-[yellow] tracking-widest inline"
-      >
+  <body
+    class="bg-black"
+    style="font-family: &quot;Sour Gummy&quot;, sans-serif"
+  >
+    <header
+      class="flex justify-center items-center"
+      style="font-family: &quot;Bubblegum Sans&quot;, sans-serif"
+    >
+      <h1 class="text-[45px] font-bold text-[yellow] tracking-widest inline">
         P
       </h1>
       <img
@@ -66,15 +70,16 @@
         src="https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
         alt="o"
       />
-      <h1
-        class="text-[45px] font-bold text-[yellow] tracking-widest inline"
-      >
+      <h1 class="text-[45px] font-bold text-[yellow] tracking-widest inline">
         kemon
       </h1>
-      <div class=" h-17 overflow-hidden p-1" >
-         
-      <img class="h-full w-full object-contain" src= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/champions/25.webp" alt="">
-    </div>
+      <div class="h-17 overflow-hidden p-1">
+        <img
+          class="h-full w-full object-contain"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/champions/25.webp"
+          alt=""
+        />
+      </div>
     </header>
 
     <main
@@ -85,22 +90,24 @@
       >
         <div
           id="cards"
-          class="flex flex-col rounded-[5px]  sm:rounded-[10px] divide-y-1 divide-yellow-300 tracking-wider overflow-auto max-h-[76vh] overflow-x-hidden pb-[40px] me-[-1px]"
+          class="flex flex-col rounded-[5px] sm:rounded-[10px] divide-y-1 divide-yellow-300 tracking-wider overflow-auto max-h-[76vh] overflow-x-hidden pb-[40px] me-[-1px]"
         ></div>
         <div
-          class=" bg-black h-[40px] flex justify-between items-center bg-yellow-300 absolute bottom-0 left-0 right-0 rounded-[0_0_4px_4px] sm:rounded-[0_0_8px_8px] ps-[1px] border-t-1 border-[gold] text-black font-semibold"
+          class="bg-black h-[40px] flex justify-between items-center bg-yellow-300 absolute bottom-0 left-0 right-0 rounded-[0_0_4px_4px] sm:rounded-[0_0_8px_8px] ps-[1px] border-t-1 border-[gold] text-black font-semibold"
         >
           <button
             onclick="previousBtnClick()"
-            class=" w-[50%] ms-[-1px] hover:text-sm hover:bg-[black] hover:text-[gold] h-full flex justify-center items-center active:text-[black] active:bg-[gold] cursor-pointer"
+            class="w-[50%] ms-[-1px] hover:text-sm hover:bg-[black] hover:text-[gold] h-full flex justify-center items-center active:text-[black] active:bg-[gold] cursor-pointer"
           >
-            <i class="fa-solid fa-angles-left"></i><div class="hidden sm:block">PREVIOUS</div>
+            <i class="fa-solid fa-angles-left"></i>
+            <div class="hidden sm:block">PREVIOUS</div>
           </button>
           <button
             onclick="nextBtnClick()"
-            class=" w-[50%]   hover:text-sm hover:bg-[black] hover:text-[gold] active:text-[black] active:bg-[gold] h-full flex justify-center items-center cursor-pointer"
+            class="w-[50%] hover:text-sm hover:bg-[black] hover:text-[gold] active:text-[black] active:bg-[gold] h-full flex justify-center items-center cursor-pointer"
           >
-            <div class="hidden sm:block">NEXT</div><i class="fa-solid fa-angles-right"></i>
+            <div class="hidden sm:block">NEXT</div>
+            <i class="fa-solid fa-angles-right"></i>
           </button>
         </div>
       </aside>
@@ -108,7 +115,7 @@
       <div class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 mx-2">
         <div class="flex h-20 justify-center items-center sm:gap-4">
           <input
-            class="w-[300px] h-[50px]  rounded-[25px_0_0_25px] sm:rounded-full px-5  font-semibold text-yellow-300 min-w-0 focus:outline-none tracking-wide border-1 border-yellow-300 bg-black focus:border-2"
+            class="w-[300px] h-[50px] rounded-[25px_0_0_25px] sm:rounded-full px-5 font-semibold text-yellow-300 min-w-0 focus:outline-none tracking-wide border-1 border-yellow-300 bg-black focus:border-2"
             type="search"
             id="search"
             placeholder="Search Pokemon"
@@ -122,15 +129,14 @@
           </button>
         </div>
 
-        <div class="flex justify-center items-center h-[60vh]" id="pokemon">
-          
-        </div>
+        <div
+          class="flex justify-center items-center h-[60vh]"
+          id="pokemon"
+        ></div>
       </div>
     </main>
-    
   </body>
   <script>
-
     const resetCard = () => {
       document.querySelector("#pokemon").innerHTML = `<article
             class="bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIyzju-j4SeCeblby7-l0dNuq1DiHNGawq5mIcWK9GyawNZbCCyopoqeU&s=10')] bg-cover min-h-90 min-w-30 max-w-60 grow rounded-sm border-2 border-[gold]/30 outline-2 outline-[gold] outline-offset-4 flex flex-col items-center justify-evenly px-2 relative"
@@ -265,19 +271,19 @@
     };
     resetCard();
 
-    const home="https://pokeapi.co/api/v2/pokemon/"
+    const home = "https://pokeapi.co/api/v2/pokemon/";
     let previousPage = null;
     let nextPage = null;
-    const maxStats={hp:255,attack:190,defence:230,speed:200}
-    
+    const maxStats = { hp: 255, attack: 190, defence: 230, speed: 200 };
+
     const getData = async (page) => {
       try {
         let apiResponse = await fetch(`${page}`);
         if (!apiResponse.ok) {
-            let cards=document.querySelector("#cards")
+          let cards = document.querySelector("#cards");
           cards.className =
             " w-full h-full rounded-[10px] bg-black flex justify-center items-center font-sans font-bold text-[30px] text-[grey]";
-          cards.innerText= "!404 Page Not Found"
+          cards.innerText = "!404 Page Not Found";
           return;
         }
         apiResponse = await apiResponse.json();
@@ -316,7 +322,7 @@
         let search = document.querySelector("#search").value;
 
         if (!search) {
-          return
+          return;
         }
 
         let apiResponse = await fetch(
@@ -327,13 +333,49 @@
           alert("Enter A Listed Name");
           return;
         }
-        apiResponse = await apiResponse.json();        
+        apiResponse = await apiResponse.json();
 
-        const image=apiResponse.sprites.versions["generation-viii"]["brilliant-diamond-shining-pearl"].front_default;
+        const imageChoosing = () => {
+          const image1 =
+            apiResponse.sprites.versions["generation-ix"].champions
+              .front_default;
+          const image2 =
+            apiResponse.sprites.versions["generation-viii"]["sword-shield"]
+              .front_default;
+          const image3 =
+            apiResponse.sprites.versions["generation-viii"][
+              "brilliant-diamond-shining-pearl"
+            ].front_default;
+          const image4 =
+            apiResponse.sprites.versions["generation-ix"]["legends-za"]
+              .front_default;
+          const image5 =
+            apiResponse.sprites.versions["generation-ix"]["scarlet-violet"]
+              .front_default;
+          const image6 =
+            apiResponse.sprites.versions["generation-viii"]["legends-arceus"]
+              .front_default;
+
+          if (image1) {
+            return image1;
+          } else if (image2) {
+            return image2;
+          } else if (image3) {
+            return image3;
+          } else if (image4) {
+            return image4;
+          } else if (image5) {
+            return image5;
+          } else if (image6) {
+            return image6;
+          } else {
+            return apiResponse.sprites.other.home.front_default;
+          }
+        };
 
         document.getElementById("image").innerHTML = `<img
                 class="h-full w-full object-contain z-2"
-                src="${ image ??  apiResponse.sprites.other.home.front_default }"
+                src="${imageChoosing()}"
                 alt="pokemon"
               />
              <div class=" absolute top-1 left-1 bg-linear-to-t from-[white] to-[red] rounded-full text-[9px] tracking-wide text-[black]   font-bold leading-none px-1 z-1">${apiResponse.types[0].type.name.toUpperCase()}</div> 
@@ -342,21 +384,21 @@
 
         document.querySelector("#pokemonName").innerText = apiResponse.name;
         document.querySelector("#height").innerHTML =
-          `<i class="fa-solid fa-up-long text-[gold] "></i> ${apiResponse.height}`;        
+          `<i class="fa-solid fa-up-long text-[gold] "></i> ${apiResponse.height}`;
         document.querySelector("#ability").innerHTML =
           `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0].ability.name}`;
         document.querySelector("#chart").innerHTML =
           `<div class="flex items-center bg-black h-2 w-full rounded-full" >
-                        <div class="bg-[red] w-[${(apiResponse.stats[0].base_stat/maxStats.hp)*100}%] h-full rounded-full "></div>
+                        <div class="bg-[red] w-[${(apiResponse.stats[0].base_stat / maxStats.hp) * 100}%] h-full rounded-full "></div>
                         </div>
             <div class="flex items-center bg-black h-2 w-full rounded-full">
-                            <div class="bg-orange-500 w-[${(apiResponse.stats[1].base_stat/maxStats.attack)*100}%] h-full rounded-full "></div>
+                            <div class="bg-orange-500 w-[${(apiResponse.stats[1].base_stat / maxStats.attack) * 100}%] h-full rounded-full "></div>
                         </div>
             <div class="flex items-center bg-black h-2 w-full rounded-full">
-                            <div class="bg-green-700 w-[${(apiResponse.stats[2].base_stat/maxStats.defence)*100}%] h-full rounded-full "></div>
+                            <div class="bg-green-700 w-[${(apiResponse.stats[2].base_stat / maxStats.defence) * 100}%] h-full rounded-full "></div>
                         </div>
             <div class="flex items-center bg-black h-2 w-full rounded-full">
-                            <div class="bg-yellow-400 w-[${(apiResponse.stats[5].base_stat/maxStats.speed)*100}%] h-full rounded-full "></div>
+                            <div class="bg-yellow-400 w-[${(apiResponse.stats[5].base_stat / maxStats.speed) * 100}%] h-full rounded-full "></div>
                         </div>`;
 
         document.querySelector("#percentage").innerHTML =
