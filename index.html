@@ -59,7 +59,7 @@
     style="font-family: &quot;Sour Gummy&quot;, sans-serif"
   >
     <header
-      class="flex justify-center items-center"
+      class="flex justify-center items-center mb-2 border-b-1 border-[gold]"
       style="font-family: &quot;Bubblegum Sans&quot;, sans-serif"
     >
       <h1 class="text-[45px] font-bold text-[yellow] tracking-widest inline">
@@ -97,14 +97,14 @@
         >
           <button
             onclick="previousBtnClick()"
-            class="w-[50%] ms-[-1px] hover:text-sm hover:bg-[black] hover:text-[gold] h-full flex justify-center items-center active:text-[black] active:bg-[gold] cursor-pointer"
+            class="w-[50%] ms-[-1px] hover:text-sm hover:bg-[black] hover:text-[gold] h-full flex justify-center items-center active:text-[black] active:bg-[green] cursor-pointer"
           >
             <i class="fa-solid fa-angles-left"></i>
             <div class="hidden sm:block">PREVIOUS</div>
           </button>
           <button
             onclick="nextBtnClick()"
-            class="w-[50%] hover:text-sm hover:bg-[black] hover:text-[gold] active:text-[black] active:bg-[gold] h-full flex justify-center items-center cursor-pointer"
+            class="w-[50%] hover:text-sm hover:bg-[black] hover:text-[gold] active:text-[black] active:bg-[green] h-full flex justify-center items-center cursor-pointer"
           >
             <div class="hidden sm:block">NEXT</div>
             <i class="fa-solid fa-angles-right"></i>
@@ -177,7 +177,7 @@
               />
              <div class=" absolute top-1 left-1 bg-linear-to-t from-[white] to-[red] rounded-full text-[9px] tracking-wide text-[black]   font-bold leading-none px-1  z-1">TYPE</div>
 
-            <div class="absolute top-0 right-0 z-3 bg-linear-to-tl from-[black] via-[green] to-[gold] h-6 w-7 rounded-[0_10px] text-sm flex items-center justify-evenly px-[1px] text-white border-1 border-[gold] text-[11px] leading-none italic me-[-1px] mt-[-1px] ">0</div>
+            <div class="absolute top-0 right-0 z-3 bg-linear-to-tl from-[black] via-[green] to-[gold] h-5 w-[34px] rounded-[0_10px] text-sm flex items-center justify-evenly px-[1px] text-white border-1 border-[gold] text-[11px] leading-none italic me-[-1px] mt-[-1px] ">0</div>
 
             </div>
             
@@ -296,7 +296,7 @@
         results.map(
           (each) =>
             (cards.innerHTML += `<button onclick="onNameClick(this)" class=" py-2 px-0 sm:p-2 rounded-[10px] bg-linear-to-b from-yellow-300/30 via-black to-black mb-2 text-yellow-300 text-center cursor-pointer  hover:bg-yellow-300 sm:hover:text-xl hover:text-[15px] 
-            active:bg-[green]" >
+             focus:bg-[green] focus:text-[green] focus:border-b-1 focus:border-[green] focus:text-[15px] sm:focus:text-xl" >
             ${each.name}
         </button>`),
         );
@@ -366,7 +366,7 @@
               />
              <div class=" absolute top-1 left-1 bg-linear-to-t from-[white] to-[red] rounded-full text-[9px] tracking-wide text-[black]   font-bold leading-none px-1 z-1">${apiResponse.types[0].type.name.toUpperCase()}</div> 
 
-             <div class="absolute top-0 right-0 z-3 bg-linear-to-tl from-[black] via-[green] to-[gold] h-6 w-7 rounded-[0_10px] text-sm flex items-center justify-evenly px-[1px] text-white border-1 border-[gold] text-[11px] leading-none italic me-[-1px] mt-[-1px]">${apiResponse.id}</div>`;
+             <div class="absolute top-0 right-0 z-3 bg-linear-to-tl from-[black] via-[green] to-[gold] h-5 w-[34px] rounded-[0_10px] text-sm flex items-center justify-evenly px-[1px] text-white border-1 border-[gold] text-[11px] leading-none italic me-[-1px] mt-[-1px] ">${apiResponse.id}</div>`;
 
         document.querySelector("#pokemonName").innerText = apiResponse.name;
         document.querySelector("#height").innerHTML =
