@@ -274,7 +274,8 @@
     const home = "https://pokeapi.co/api/v2/pokemon/";
     let previousPage = null;
     let nextPage = null;
-    const maxStats = { hp: 255, attack: 190, defence: 230, speed: 200 };
+    const feetVal=3.28084;
+    const maxStats = { hp: 255, attack: 190, defence: 250, speed: 200 };
 
     const getData = async (page) => {
       try {
@@ -370,7 +371,7 @@
 
         document.querySelector("#pokemonName").innerText = apiResponse.name;
         document.querySelector("#height").innerHTML =
-          `<i class="fa-solid fa-up-long text-[gold] "></i> ${apiResponse.height}`;
+          `<i class="fa-solid fa-up-long text-[gold] "></i> ${((apiResponse.height/10)*feetVal).toFixed(2)} <span class="text-[gold] text-[15px]">ft</span>`;
         document.querySelector("#ability").innerHTML =
           `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0].ability.name}`;
         document.querySelector("#chart").innerHTML =
