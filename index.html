@@ -338,6 +338,7 @@
           const image6 =
             apiResponse.sprites.versions["generation-viii"]["legends-arceus"]
               .front_default;
+          const defaultImage=apiResponse.sprites.other["official-artwork"].front_default;
 
           if (image1) {
             return image1;
@@ -351,8 +352,10 @@
             return image5;
           } else if (image6) {
             return image6;
-          } else {
-            return apiResponse.sprites.other.home.front_default;
+          } else if (defaultImage){
+            return defaultImage
+          }else{
+            return "https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
           }
         };
 
