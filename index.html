@@ -114,16 +114,20 @@
 
       <div class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 mx-2">
         <div class="flex h-20 justify-center items-center sm:gap-4">
-          <input
-            class="w-[300px] h-[50px] rounded-[25px_0_0_25px] sm:rounded-full px-5 font-semibold text-yellow-300 min-w-0 focus:outline-none tracking-wide border-1 border-yellow-300 bg-black focus:border-2"
-            type="search"
-            id="search"
-            placeholder="Search Pokemon"
-          />
+          <div class="relative min-w-0 w-[300px]">
+            <input
+              class="h-[50px] rounded-[25px_0_0_25px] sm:rounded-full px-5 font-semibold text-yellow-300 w-full focus:outline-none tracking-wide border-1 border-yellow-300 bg-black focus:border-2"
+              type="search"
+              id="search"
+              placeholder="Search Pokemon"
+              autocomplete="off"
+            />
+            <ul id="suggestions" class="hidden"></ul>
+          </div>
           <button
             onclick="onSearchBtnClick()"
             type="button"
-            class="text-yellow-300 font-semibold py-[9px] px-4 rounded-[0_25px_25px_0] sm:rounded-full ms-[-1px] border-2 border-yelllow-300 text-lg hover:bg-yellow-300 hover:text-black hover:border-yellow-300 active:text-[gold] active:bg-black cursor-pointer"
+            class="text-yellow-300 font-semibold py-[9px] px-2 sm:px-4 rounded-[0_25px_25px_0] sm:rounded-full ms-[-1px] border-2 border-yelllow-300 text-lg hover:bg-yellow-300 hover:text-black hover:border-yellow-300 active:text-[gold] active:bg-black cursor-pointer "
           >
             Search
           </button>
@@ -274,8 +278,9 @@
     const home = "https://pokeapi.co/api/v2/pokemon/";
     let previousPage = null;
     let nextPage = null;
-    const feetVal=3.28084;
+    const feetVal = 3.28084;
     const maxStats = { hp: 255, attack: 190, defence: 250, speed: 200 };
+    let pokemonNames = [];
 
     const getData = async (page) => {
       try {
@@ -307,8 +312,11 @@
     };
     getData(home);
 
-    const cardDisplay=async(search)=>{
+    const cardDisplay = async (search) => {
       try {
+        document.getElementById("suggestions").classList = "hidden";
+        document.querySelector("#search").value = "";
+
         let apiResponse = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${search}`,
         );
@@ -339,7 +347,8 @@
           const image6 =
             apiResponse.sprites.versions["generation-viii"]["legends-arceus"]
               .front_default;
-          const defaultImage=apiResponse.sprites.other["official-artwork"].front_default;
+          const defaultImage =
+            apiResponse.sprites.other["official-artwork"].front_default;
 
           if (image1) {
             return image1;
@@ -353,10 +362,10 @@
             return image5;
           } else if (image6) {
             return image6;
-          } else if (defaultImage){
-            return defaultImage
-          }else{
-            return "https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png"
+          } else if (defaultImage) {
+            return defaultImage;
+          } else {
+            return "https://www.freepnglogos.com/uploads/pokeball-png/pokeball-alexa-style-blog-pokemon-inspired-charmander-daily-8.png";
           }
         };
 
@@ -371,7 +380,7 @@
 
         document.querySelector("#pokemonName").innerText = apiResponse.name;
         document.querySelector("#height").innerHTML =
-          `<i class="fa-solid fa-up-long text-[gold] "></i> ${((apiResponse.height/10)*feetVal).toFixed(2)} <span class="text-[gold] text-[15px]">ft</span>`;
+          `<i class="fa-solid fa-up-long text-[gold] "></i> ${((apiResponse.height / 10) * feetVal).toFixed(2)} <span class="text-[gold] text-[15px]">ft</span>`;
         document.querySelector("#ability").innerHTML =
           `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0].ability.name}`;
         document.querySelector("#chart").innerHTML =
@@ -393,10 +402,8 @@
                   <span>${apiResponse.stats[1].base_stat}</span>
                   <span>${apiResponse.stats[2].base_stat}</span>
                   <span>${apiResponse.stats[5].base_stat}</span>`;
-      } catch (error) {
-        
-      }
-    }
+      } catch (error) {}
+    };
 
     const nextBtnClick = () => {
       if (nextPage) {
@@ -413,21 +420,66 @@
     const onSearchBtnClick = async () => {
       try {
         let search = document.querySelector("#search").value;
-
         if (!search) {
           return;
         }
-        cardDisplay(search)
-        
+        cardDisplay(search);
       } catch (error) {
         console.log(error);
       }
     };
 
-    const onNameClick=(buttonName)=>{
-      let btnName= buttonName.innerText
-      cardDisplay(btnName)
-    }
+    const onNameClick = (buttonName) => {
+      let btnName = buttonName.innerText;
+      cardDisplay(btnName);
+    };
 
+    const loadPokiNames = async () => {
+      try {
+        let searchApi = await fetch(
+          "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1351",
+        );
+        searchApi = await searchApi.json();
+        pokemonNames = searchApi.results.map((each) => each.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadPokiNames();
+
+    const suggestionClick = (name) => {
+      document.querySelector("#search").value = name.innerText;
+      cardDisplay(name.innerText);
+    };
+
+    const showSuggestions = (searching) => {
+      try {
+        const searchName = searching.target.value.toLowerCase().trim();
+        const suggestionsList = document.getElementById("suggestions");
+        suggestionsList.innerHTML = "";
+        suggestionsList.classList =
+          "absolute scrollbar-none max-w-[300px] top-full translate-y-1 left-0 right-0 list-none text-yellow-500 bg-black/60 backdrop-blur-sm z-100 rounded-lg text-center border-1 border-yellow-300/50 flex flex-col divide-y-1 divide-yellow-300 max-h-90 overflow-auto";
+        if (!searchName) {
+          suggestionsList.classList = "hidden";
+          return;
+        }
+        const matches = pokemonNames.filter((names) =>
+          names.includes(searchName),
+        );
+        if (matches.length == 0) {
+          suggestionsList.innerHTML += `<li class="py-1 cursor-pointer hover:scale-y-[1.1] transition-transform ease-in-out duration-200" onclick="suggestionClick(this)">no-matches...</li>`;
+        } else {
+          matches.map(
+            (each) =>
+              (suggestionsList.innerHTML += `<li class="py-1 cursor-pointer hover:scale-y-[1.1] transition-transform ease-in-out duration-200" onclick="suggestionClick(this)">${each}</li>`),
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    document
+      .querySelector("#search")
+      .addEventListener("input", showSuggestions);
   </script>
 </html>
