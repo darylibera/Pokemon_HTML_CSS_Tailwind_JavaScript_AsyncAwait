@@ -171,9 +171,14 @@ const getData = async (page) => {
 };
 getData(home);
 
+const loadingScreen = () => {
+  const loadingCard = document.querySelector("#image");
+  loadingCard.innerHTML = `  <video class="w-1/2 object-center" muted autoplay loop playsinline onloadedmetadata="this.playbackRate=3.0" src="./assets/loading.mp4"></video>`;
+};
+
 const historyStore = (search) => {
   if (searchHistory.some((each) => each === search)) {
-    searchHistory = searchHistory.filter((eachName)=>eachName != search)
+    searchHistory = searchHistory.filter((eachName) => eachName != search);
   }
   searchHistory.unshift(search);
   localStorage.setItem("pokemonSearchHistory", JSON.stringify(searchHistory));
@@ -182,6 +187,7 @@ const historyStore = (search) => {
 const cardDisplay = async (search) => {
   try {
     hideSuggestions();
+    loadingScreen();
     let apiResponse = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${search}`,
     );
@@ -237,7 +243,7 @@ const cardDisplay = async (search) => {
                 src="${imageChoosing()}"
                 alt="pokemon"
               />
-             <div class=" absolute top-1 left-1 bg-linear-to-t from-[white] to-[red] rounded-full text-[9px] tracking-wide text-[black]   font-bold leading-none px-1 z-1">${apiResponse.types[0].type.name.toUpperCase()}</div> 
+             <div class=" absolute top-1 left-1 bg-linear-to-t from-[white] to-[red] rounded-full text-[9px] tracking-wide text-[black]   font-bold leading-none px-1 z-1">${apiResponse.types[0]?.type?.name.toUpperCase() || "unknown"}</div> 
 
              <div class="absolute top-0 right-0 z-3 bg-linear-to-tl from-[black] via-[green] to-[gold] h-5 w-[34px] rounded-[0_10px] text-sm flex items-center justify-evenly px-[1px] text-white border-1 border-[gold] text-[11px] leading-none italic me-[-1px] mt-[-1px] ">${apiResponse.id}</div>`;
 
@@ -245,7 +251,7 @@ const cardDisplay = async (search) => {
     document.querySelector("#height").innerHTML =
       `<i class="fa-solid fa-up-long text-[gold] "></i> ${((apiResponse.height / 10) * feetVal).toFixed(2)} <span class="text-[gold] text-[15px]">ft</span>`;
     document.querySelector("#ability").innerHTML =
-      `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0].ability.name}`;
+      `<i class="fa-brands fa-superpowers text-[gold] "></i> ${apiResponse.abilities[0]?.ability?.name || "unknown"}`;
     document.querySelector("#chart").innerHTML =
       `<div class="flex items-center bg-black h-2 w-full rounded-full" >
                         <div class="bg-[red] w-[${(apiResponse.stats[0].base_stat / maxStats.hp) * 100}%] h-full rounded-full "></div>
@@ -267,7 +273,10 @@ const cardDisplay = async (search) => {
                   <span>${apiResponse.stats[5].base_stat}</span>`;
 
     historyStore(apiResponse.name);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    resetCard()
+  }
 };
 
 const nextBtnClick = () => {
@@ -339,7 +348,7 @@ const showSuggestions = (searching) => {
       "absolute scrollbar-none max-w-[300px] top-full translate-y-1 left-0 right-0 list-none text-yellow-500 bg-black/60 backdrop-blur-sm z-100 rounded-lg text-center border-1 border-yellow-300/50 flex flex-col divide-y-1 divide-yellow-300/50 max-h-90 overflow-auto";
     if (!searchName) {
       suggestionsList.className = "hidden";
-      hideSuggestions();
+      historySuggestions()
       return;
     }
     const matches = pokemonNames.filter((names) => names.includes(searchName));
@@ -360,6 +369,8 @@ const historySuggestions = () => {
   try {
     const suggestionsList = document.getElementById("suggestions");
     if (searchHistory.length === 0) {
+      suggestionsList.classList =
+      "hidden";
       return;
     }
     suggestionsList.innerHTML = "";
@@ -367,7 +378,7 @@ const historySuggestions = () => {
       "absolute scrollbar-none max-w-[300px] top-full translate-y-1 left-0 right-0 list-none text-yellow-500 bg-black/60 backdrop-blur-sm z-100 rounded-lg text-center border-1 border-yellow-300/50 flex flex-col divide-y-1 divide-yellow-300/50 max-h-90 overflow-auto";
     searchHistory.map(
       (each, index) =>
-        (suggestionsList.innerHTML += `<li class=" flex justify-end items-center hover:scale-y-[1.1] transition-all ease-in-out duration-200 text-sm group relative min-h-7 py-1"><span class="w-full flex justify-center items-center cursor-pointer transition-all ease-in-out duration-200" onclick="cardDisplay('${each}')">${each}</span> <button type="button" onclick="deleteHistory(${index})" class="sm:hidden sm:group-hover:block hover:text-red-600 active:text-red-600  text-yellow-500 text-xs cursor-pointer transition-all ease-in-out duration-200 z-100 h-full sm:min-w-7"><i class="fa-solid fa-xmark"></i></button> </i>
+        (suggestionsList.innerHTML += `<li class=" flex justify-end items-center transition-all ease-in-out duration-200 text-sm group w-full min-h-7 py-1 relative"><span class="flex w-full justify-center items-center cursor-pointer pe-3 sm:pe-0  sm:group-hover:-translate-x-3 transition-translate ease-in-out duration-300" onclick="cardDisplay('${each}')">${each}</span> <button type="button" onclick="deleteHistory(${index})" class=" absolute right-0 sm:scale-0 sm:opacity-0 sm:group-hover:opacity-100 sm:group-hover:scale-[1] sm:translate-x-5 sm:group-hover:-translate-x-0 sm:group-hover:cursor-pointer hover:text-red-500 active:text-red-600  text-yellow-500 text-xs cursor-pointer transition-all ease-in-out duration-300 z-100 h-full sm:min-w-7 deleteHistoryBtn"><i class="fa-solid fa-xmark"></i></button> </i>
 </li>`),
     );
   } catch (error) {
@@ -378,8 +389,15 @@ const historySuggestions = () => {
 const deleteHistory = (id) => {
   searchHistory.splice(id, 1);
   localStorage.setItem("pokemonSearchHistory", JSON.stringify(searchHistory));
+  historySuggestions()
 };
 
 document.querySelector("#search").addEventListener("input", showSuggestions);
 document.querySelector("#search").addEventListener("focus", historySuggestions);
-document.querySelector("#search").addEventListener("blur", hideSuggestions);
+document.addEventListener("pointerdown",(e)=>{
+  const search = document.querySelector("#search")
+  const suggestions= document.querySelector("#suggestions")
+  if(!search.contains(e.target) && !suggestions.contains(e.target)){
+    hideSuggestions()
+  }
+})
