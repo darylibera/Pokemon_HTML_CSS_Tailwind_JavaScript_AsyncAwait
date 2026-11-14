@@ -138,10 +138,11 @@ let nextPage = null;
 const feetVal = 3.28084;
 const maxStats = { hp: 255, attack: 190, defence: 250, speed: 200 };
 let pokemonNames = [];
+let apiResponse = null;
 let searchHistory =
   JSON.parse(localStorage.getItem("pokemonSearchHistory")) || [];
 
-const getData = async (page) => {
+const getDataNames = async (page) => {
   try {
     let apiResponse = await fetch(`${page}`);
     if (!apiResponse.ok) {
@@ -169,11 +170,11 @@ const getData = async (page) => {
     console.log(error);
   }
 };
-getData(home);
+getDataNames(home);
 
 const loadingScreen = () => {
   const loadingCard = document.querySelector("#image");
-  loadingCard.innerHTML = `  <video class="w-1/2 object-center" muted autoplay loop playsinline onloadedmetadata="this.playbackRate=3.0" src="./assets/loading.mp4"></video>`;
+  loadingCard.innerHTML = `  <video class="w-1/2 h-full object-center" muted autoplay loop playsinline onloadedmetadata="this.playbackRate=6.0" src="./assets/loading.mp4"></video>`;
 };
 
 const historyStore = (search) => {
@@ -184,20 +185,7 @@ const historyStore = (search) => {
   localStorage.setItem("pokemonSearchHistory", JSON.stringify(searchHistory));
 };
 
-const cardDisplay = async (search) => {
-  try {
-    hideSuggestions();
-    loadingScreen();
-    let apiResponse = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${search}`,
-    );
-    if (!apiResponse.ok) {
-      resetCard();
-      alert("Enter A Listed Name");
-      return;
-    }
-    apiResponse = await apiResponse.json();
-    const imageChoosing = () => {
+ const imageChoosing = () => {
       const image1 =
         apiResponse.sprites.versions["generation-ix"].champions.front_default;
       const image2 =
@@ -238,6 +226,8 @@ const cardDisplay = async (search) => {
       }
     };
 
+const cardDisplay = () => {
+  try {
     document.getElementById("image").innerHTML = `<img
                 class="h-full w-full object-contain z-2"
                 src="${imageChoosing()}"
@@ -279,15 +269,37 @@ const cardDisplay = async (search) => {
   }
 };
 
+const searchName=async(search)=>{
+  try {
+    resetCard();
+    hideSuggestions();
+    loadingScreen();
+    apiResponse = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${search}`,
+    );
+    if (!apiResponse.ok) {
+      resetCard();
+      alert("Enter A Listed Name");
+      return;
+    }
+    apiResponse = await apiResponse.json();
+    setTimeout(() => {
+      cardDisplay();
+    }, 700);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const nextBtnClick = () => {
   if (nextPage) {
-    getData(nextPage);
+    getDataNames(nextPage);
   }
 };
 
 const previousBtnClick = () => {
   if (previousPage) {
-    getData(previousPage);
+    getDataNames(previousPage);
   }
 };
 
@@ -297,7 +309,7 @@ const onSearchBtnClick = async () => {
     if (!search) {
       return;
     }
-    cardDisplay(search);
+    searchName(search);
   } catch (error) {
     console.log(error);
   }
@@ -305,7 +317,7 @@ const onSearchBtnClick = async () => {
 
 const onNameClick = (buttonName) => {
   let btnName = buttonName.innerText;
-  cardDisplay(btnName);
+  searchName(btnName);
 };
 
 const loadPokiNames = async () => {
@@ -323,7 +335,7 @@ loadPokiNames();
 
 const suggestionClick = (name) => {
   document.querySelector("#search").value = name.innerText;
-  cardDisplay(name.innerText);
+  searchName(name.innerText);
 };
 
 
@@ -333,7 +345,7 @@ const hideSuggestions = () => {
       document.querySelector("#search").value = "";
       const suggestionsList = document.getElementById("suggestions");
       suggestionsList.className = "hidden";
-    }, 300);
+    }, 270);
   } catch (error) {
     console.log(error);
   }
@@ -353,7 +365,7 @@ const showSuggestions = (searching) => {
     }
     const matches = pokemonNames.filter((names) => names.includes(searchName));
     if (matches.length == 0) {
-      suggestionsList.innerHTML += `<li class="py-1 cursor-pointer hover:scale-y-[1.1] transition-transform ease-in-out duration-200">no-matches...</li>`;
+      suggestionsList.innerHTML += `<li class="py-1 cursor-pointer hover:scale-y-[1.1] transition-transform ease-in-out duration-200" onclick="hideSuggestions()">no-matches...</li>`;
     } else {
       matches.map(
         (each) =>
@@ -378,7 +390,7 @@ const historySuggestions = () => {
       "absolute scrollbar-none max-w-[300px] top-full translate-y-1 left-0 right-0 list-none text-yellow-500 bg-black/60 backdrop-blur-sm z-100 rounded-lg text-center border-1 border-yellow-300/50 flex flex-col divide-y-1 divide-yellow-300/50 max-h-90 overflow-auto";
     searchHistory.map(
       (each, index) =>
-        (suggestionsList.innerHTML += `<li class=" flex justify-end items-center transition-all ease-in-out duration-200 text-sm group w-full min-h-7 py-1 relative"><span class="flex w-full justify-center items-center cursor-pointer pe-3 sm:pe-0  sm:group-hover:-translate-x-3 transition-translate ease-in-out duration-300" onclick="cardDisplay('${each}')">${each}</span> <button type="button" onclick="deleteHistory(${index})" class=" absolute right-0 sm:scale-0 sm:opacity-0 sm:group-hover:opacity-100 sm:group-hover:scale-[1] sm:translate-x-5 sm:group-hover:-translate-x-0 sm:group-hover:cursor-pointer hover:text-red-500 active:text-red-600  text-yellow-500 text-xs cursor-pointer transition-all ease-in-out duration-300 z-100 h-full sm:min-w-7 deleteHistoryBtn"><i class="fa-solid fa-xmark"></i></button> </i>
+        (suggestionsList.innerHTML += `<li class=" flex justify-end items-center transition-all ease-in-out duration-200 text-sm group w-full min-h-7 py-1 relative"><span class="flex w-full justify-center items-center cursor-pointer pe-3 sm:pe-0  sm:group-hover:-translate-x-3 transition-translate ease-in-out duration-300" onclick="searchName('${each}')">${each}</span> <button type="button" onclick="deleteHistory(${index},this)" class=" absolute right-0 sm:scale-0 sm:opacity-0 sm:group-hover:opacity-100 sm:group-hover:scale-[1] sm:translate-x-5 sm:group-hover:-translate-x-0 sm:group-hover:cursor-pointer hover:text-red-500 active:text-red-600  text-yellow-500 text-xs cursor-pointer transition-all ease-in-out duration-300 z-100 h-full sm:min-w-7 deleteHistoryBtn"><i class="fa-solid fa-xmark"></i></button> </i>
 </li>`),
     );
   } catch (error) {
@@ -386,10 +398,23 @@ const historySuggestions = () => {
   }
 };
 
-const deleteHistory = (id) => {
-  searchHistory.splice(id, 1);
+const deleteHistory = (id,item) => {
+  try {
+    let deleteItem=item.closest('li')
+    deleteItem.classList.add("delete-slide");
+    setTimeout(()=>{
+    deleteItem.classList="h-7 opacity-0 delete-shrink";
+    },500)
+    
+  setTimeout(() => {
+    searchHistory.splice(id, 1);
   localStorage.setItem("pokemonSearchHistory", JSON.stringify(searchHistory));
   historySuggestions()
+  }, 890);
+    
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 document.querySelector("#search").addEventListener("input", showSuggestions);

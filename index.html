@@ -52,6 +52,31 @@
           border-radius: 0px 100px 100px 0px;
         }
       }
+      .delete-slide {
+        animation: slideLeft 500ms ease forwards;
+      }
+
+      @keyframes slideLeft {
+        to {
+          transform: translateX(-120px);
+          opacity: 0;
+        }
+      }
+
+      .delete-shrink {
+        animation: shrinkHeight 400ms ease forwards;
+      }
+
+      @keyframes shrinkHeight {
+        to {
+          height: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-width: 0;
+        }
+      }
     </style>
   </head>
   <body
@@ -127,7 +152,7 @@
           <button
             onclick="onSearchBtnClick()"
             type="button"
-            class="text-yellow-300 font-semibold py-[9px] px-2 sm:px-4 rounded-[0_25px_25px_0] sm:rounded-full ms-[-1px] border-2 border-yelllow-300 text-lg hover:bg-yellow-300 hover:text-black hover:border-yellow-300 active:text-[gold] active:bg-black cursor-pointer "
+            class="text-yellow-300 font-semibold py-[9px] px-2 sm:px-4 rounded-[0_25px_25px_0] sm:rounded-full ms-[-1px] border-2 border-yelllow-300 text-lg hover:bg-yellow-300 hover:text-black hover:border-yellow-300 active:text-[gold] active:bg-black cursor-pointer"
           >
             Search
           </button>
