@@ -6,8 +6,6 @@ Search any Pokémon, browse the full National Dex page by page, and
 revisit recent searches. No frameworks, no build step — just open
 the file and it runs.
 
-![Pokémon Explorer](assets/screenshot.png)
-
 **Live demo:** https://darylibera.github.io/Pokemon_HTML_CSS_Tailwind_JavaScript_AsyncAwait/
 
 ## What it does
